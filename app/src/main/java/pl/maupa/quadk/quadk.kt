@@ -25,10 +25,10 @@ class Quadk {
      *
      * @param: date - sprawdzana data, domyślnie w momencie wywołania
      */
-    fun isOpened(date: Date = Date()) : Boolean {
+    fun isOpened(date: Date = Date()): Boolean {
         return try {
             DateUtils().isDateInRange(date, Schedule().getCurrentTimeline())
-        } catch ( _ : NoTimelineException) {
+        } catch (_: NoTimelineException) {
             false
         }
     }
@@ -104,6 +104,8 @@ class DateUtils {
      * Parsowanie godzin
      */
     private fun getHourFromString(time: String): Int {
+        // TODO TUTAJ ŹLE SIĘ PARSUJE
+        println( "Hours -> ${ time.substring(0, time.indexOf(":"))}")
         return time.substring(time.indexOf(":")).toInt()
     }
 
@@ -111,6 +113,7 @@ class DateUtils {
      * Parsowanie minut
      */
     private fun getMinutesFromString(time: String): Int {
-        return time.substring(time.indexOf(":") + 1, time.length).toInt()
+        println( "Minutes -> ${time.substring(time.indexOf(":") + 1, time.length)}")
+        return time.substring(time.indexOf(":") + 2, time.length).toInt()
     }
 }

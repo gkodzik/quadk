@@ -9,15 +9,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        button.setOnClickListener { setText() }
+        setText()
+    }
+
+    fun setText() {
         text.text = try {
             if (Quadk().isOpened()) {
                 "TAK!"
             } else {
                 "NIE!"
             }
-        } catch (e : NumberFormatException) {
+        } catch (e: NumberFormatException) {
             "Zły format daty"
         }
-
-}
+    }
 }
