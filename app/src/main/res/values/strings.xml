@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">quadk</string>
+    <string name="app_name">Quad-K</string>
     <string name="title">CZY PRZEJDĘ PRZEZ KŁADKĘ???</string>
-    <string name="button">Refresh!</string>
+    <string name="button">Odśwież!</string>
+    <string name="quadk_widget_title">Quad-K Widget</string>
 </resources>

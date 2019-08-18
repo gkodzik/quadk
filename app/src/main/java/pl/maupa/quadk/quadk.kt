@@ -25,11 +25,23 @@ class Quadk {
      *
      * @param: date - sprawdzana data, domyślnie w momencie wywołania
      */
-    fun isOpened(date: Date = Date()): Boolean {
+    private fun isOpened(date: Date = Date()): Boolean {
         return try {
             DateUtils().isDateInRange(date, Schedule().getCurrentTimeline())
         } catch (_: NoTimelineException) {
             false
+        }
+    }
+
+    fun getTextIfIsOpen() : String {
+        return try {
+            if (Quadk().isOpened()) {
+                "TAK!"
+            } else {
+                "NIE!"
+            }
+        } catch (e: NumberFormatException) {
+            "Zły format daty"
         }
     }
 }
@@ -42,7 +54,7 @@ class Schedule {
     /**
      * Pobranie aktualnego zestawu
      *
-     * @throws: NoTimeineException - kiedy nie znajdziemy aktualnych godzin otwarcia
+     * @throws: NoTimelineException - kiedy nie znajdziemy aktualnych godzin otwarcia
      */
     fun getCurrentTimeline(): Timeline {
         val currentDate = Date()
@@ -56,7 +68,7 @@ class Schedule {
     /**
      * Aktualna lista otwarcia
      */
-    val openTimeline = listOf(
+    private val openTimeline = listOf(
         Timeline("00:00", "07:00"),
         Timeline("07:30", "08:00"),
         Timeline("08:30", "09:00"),
@@ -104,16 +116,15 @@ class DateUtils {
      * Parsowanie godzin
      */
     private fun getHourFromString(time: String): Int {
-        // TODO TUTAJ ŹLE SIĘ PARSUJE
-        println( "Hours -> ${ time.substring(0, time.indexOf(":"))}")
-        return time.substring(time.indexOf(":")).toInt()
+        val timeString = time.substring(0, time.indexOf(":"))
+        return timeString.toInt()
     }
 
     /**
      * Parsowanie minut
      */
     private fun getMinutesFromString(time: String): Int {
-        println( "Minutes -> ${time.substring(time.indexOf(":") + 1, time.length)}")
-        return time.substring(time.indexOf(":") + 2, time.length).toInt()
+        val timeString = time.substring(time.indexOf(":") + 1, time.length)
+        return timeString.toInt()
     }
 }

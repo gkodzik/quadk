@@ -14,14 +14,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setText() {
-        text.text = try {
-            if (Quadk().isOpened()) {
-                "TAK!"
-            } else {
-                "NIE!"
-            }
-        } catch (e: NumberFormatException) {
-            "Zły format daty"
-        }
+        text.text = Quadk().getTextIfIsOpen()
     }
 }
