@@ -5,7 +5,7 @@
         android:minHeight="73dip"
         android:minResizeHeight="73dp"
         android:minResizeWidth="73dp"
-        android:updatePeriodMillis="300000"
+        android:updatePeriodMillis="1800000"
         android:previewImage="@drawable/ic_launcher_background"
         android:initialLayout="@layout/quadk_appwidget"
         android:resizeMode="horizontal|vertical">

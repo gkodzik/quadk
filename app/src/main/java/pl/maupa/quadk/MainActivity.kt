@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setText()
     }
 
-    fun setText() {
-        text.text = Quadk().getTextIfIsOpen()
+    private fun setText() {
+        text.text = Quadk.getTextIfIsOpen()
     }
 }
