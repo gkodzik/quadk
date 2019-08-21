@@ -7,7 +7,7 @@ import java.util.*
 /**
  * Para - godziny otwarcia i zamknięcia
  */
-data class Timeline(val openDate: Date, val closeDate: Date) {
+data class Timeline(val openDate: Calendar, val closeDate: Calendar) {
     constructor(open: String, close: String) : this(DateUtils.getDate(open), DateUtils.getDate(close))
 }
 
@@ -27,7 +27,7 @@ class Quadk {
          *
          * @param: date - sprawdzana data, domyślnie w momencie wywołania
          */
-        private fun isOpened(date: Date = Date()): Boolean {
+        private fun isOpened(date: Calendar = Calendar.getInstance()): Boolean {
             return try {
                 DateUtils.isDateInRange(date, Schedule.getCurrentTimeline())
             } catch (_: NoTimelineException) {
@@ -79,7 +79,7 @@ class Schedule {
          * @throws: NoTimelineException - kiedy nie znajdziemy aktualnych godzin otwarcia
          */
         fun getCurrentTimeline(): Timeline {
-            val currentDate = Date()
+            val currentDate = Calendar.getInstance()
             for (timeline in openTimeline) {
                 if (DateUtils.isDateInRange(currentDate, timeline))
                     return timeline
@@ -128,16 +128,23 @@ class DateUtils {
          *
          * @return: Boolean
          */
-        fun isDateInRange(date: Date, openWindow: Timeline): Boolean {
+        fun isDateInRange(date: Calendar, openWindow: Timeline): Boolean {
             return date.after(openWindow.openDate) and date.before(openWindow.closeDate)
         }
 
         /**
          * Z podanego tekstu sparsuj datę.
          * Format godziny wejściowej - "HH:mm"
+         * Na wyjściu podana data w dniu dzisiejszym.
          */
-        fun getDate(time: String): Date {
-            return dateFormat.parse(time)
+        fun getDate(time: String): Calendar {
+            var calendar = Calendar.getInstance()
+            calendar.time = dateFormat.parse(time)
+            var resCalendar = Calendar.getInstance()
+            resCalendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR))
+            resCalendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE))
+            println("The date is ${resCalendar.get(Calendar.YEAR)}.")
+            return resCalendar
         }
 
         /**
