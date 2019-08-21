@@ -1,13 +1,13 @@
 package pl.maupa.quadk
 
-import java.lang.Exception
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
  * Para - godziny otwarcia i zamknięcia
  */
 data class Timeline(val openDate: Date, val closeDate: Date) {
-    constructor(open: String, close: String) : this(DateUtils().dateOf(open), DateUtils().dateOf(close))
+    constructor(open: String, close: String) : this(DateUtils.getDate(open), DateUtils.getDate(close))
 }
 
 /**
@@ -27,13 +27,13 @@ class Quadk {
      */
     private fun isOpened(date: Date = Date()): Boolean {
         return try {
-            DateUtils().isDateInRange(date, Schedule().getCurrentTimeline())
+            DateUtils.isDateInRange(date, Schedule().getCurrentTimeline())
         } catch (_: NoTimelineException) {
             false
         }
     }
 
-    fun getTextIfIsOpen() : String {
+    fun getTextIfIsOpen(): String {
         return try {
             if (Quadk().isOpened()) {
                 "TAK!"
@@ -59,7 +59,7 @@ class Schedule {
     fun getCurrentTimeline(): Timeline {
         val currentDate = Date()
         for (timeline in openTimeline) {
-            if (DateUtils().isDateInRange(currentDate, timeline))
+            if (DateUtils.isDateInRange(currentDate, timeline))
                 return timeline
         }
         throw NoTimelineException()
@@ -93,38 +93,25 @@ class Schedule {
  * Proste operacje na datach
  */
 class DateUtils {
-    /**
-     * Sprawdzenie czy podana data jest z podanym zakresie
-     *
-     * @return: Boolean
-     */
-    fun isDateInRange(date: Date, openWindow: Timeline): Boolean {
-        return date.after(openWindow.openDate) and date.before(openWindow.closeDate)
-    }
 
-    /**
-     * Utworznie daty z wartości tekstowej
-     */
-    fun dateOf(time: String): Date {
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR, getHourFromString(time))
-        calendar.set(Calendar.MINUTE, getMinutesFromString(time))
-        return Date(calendar.timeInMillis)
-    }
+    companion object {
+        /**
+         * Date format for easier usage
+         */
+        val dateFormat: SimpleDateFormat = SimpleDateFormat("HH:mm")
 
-    /**
-     * Parsowanie godzin
-     */
-    private fun getHourFromString(time: String): Int {
-        val timeString = time.substring(0, time.indexOf(":"))
-        return timeString.toInt()
-    }
+        /**
+         * Sprawdzenie czy podana data jest z podanym zakresie
+         *
+         * @return: Boolean
+         */
+        fun isDateInRange(date: Date, openWindow: Timeline): Boolean {
+            return date.after(openWindow.openDate) and date.before(openWindow.closeDate)
+        }
 
-    /**
-     * Parsowanie minut
-     */
-    private fun getMinutesFromString(time: String): Int {
-        val timeString = time.substring(time.indexOf(":") + 1, time.length)
-        return timeString.toInt()
+
+        fun getDate(time: String): Date {
+            return dateFormat.parse(time)
+        }
     }
 }
