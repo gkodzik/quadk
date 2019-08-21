@@ -56,9 +56,9 @@ class Quadk {
         fun getLightColor(): Int {
             return try {
                 if (isOpened()) {
-                    R.color.light_green
+                    R.drawable.bkg_green
                 } else {
-                    R.color.light_red
+                    R.drawable.bkg_red
                 }
             } catch (e: java.lang.NumberFormatException) {
                 Color.RED
