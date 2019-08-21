@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:padding="@dimen/padding"
+            android:clickable="false"
             android:src="@android:drawable/stat_notify_sync"/>
 
 </LinearLayout>
