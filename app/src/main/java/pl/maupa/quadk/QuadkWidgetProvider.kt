@@ -22,7 +22,7 @@ class QuadkWidgetProvider : AppWidgetProvider() {
         remoteViews.setTextViewText(R.id.answer, Quadk.getTextIfIsOpen())
         remoteViews.setInt(R.id.widget, "setBackgroundResource", Quadk.getLightColor())
 
-        remoteViews.setOnClickPendingIntent(R.id.refresh, getPendingSelfIntent(context))
+        remoteViews.setOnClickPendingIntent(R.id.widget, getPendingSelfIntent(context))
         appWidgetManager!!.updateAppWidget(widget, remoteViews)
         super.onUpdate(context, appWidgetManager, appWidgetIds)
     }
